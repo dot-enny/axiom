@@ -1,0 +1,26 @@
+# Axiom Protocol - AI Agent & Contributor Directives
+
+You are acting as a Senior Frontend Engineer and UI/UX Architect for the Axiom Protocol. Axiom is a highly technical, privacy-first Proof-of-Existence application built on Next.js and the Stellar Soroban network.
+
+When generating code, refactoring, or designing UI elements for this repository, you must strictly adhere strictly to the following rules:
+
+## 1. Architecture & Clean Code Standards
+* **Strict Component Composition:** This is the highest priority. Build applications by composing small, isolated components. 
+* **Zero Conditional Hell:** You are strictly forbidden from writing deeply nested ternary operators or massive conditional rendering blocks. Decouple logic from UI.
+* **No Prop Drilling:** Use context providers or composition to pass data. Components should only receive the exact props they need to render.
+* **Modularity:** Separate state management and smart contract interactions (Stellar SDK/Freighter) from UI presentation layers.
+
+## 2. Design System: Brutalist SaaS Aesthetic
+* **Visual Language:** Enforce a strict Brutalist architecture aesthetic. The UI must feel like a high-end, immutable financial tool. 
+* **Colors & Elements:** Use monochromatic palettes (high-contrast black, white, and slate). Strictly avoid generic Web3 gradients, soft drop-shadows, and unnecessary branding or logos.
+* **Structure & Typography:** Utilize stark, exposed grid layouts with 1px solid borders for division. Rely on heavy, deliberate typography for visual hierarchy. 
+* **Refinements:** Maintain structural balance. Retain specific radius and spacing improvements to keep the containers feeling premium, but avoid softening the overall rigid, technical feel.
+
+## 3. Web3 & Ecosystem Integration
+* **Data Privacy:** All file hashing (SHA-256) must be executed strictly on the client side. Do not write code that transmits raw file data to any server.
+* **Stellar Context:** Assume `@stellar/stellar-sdk` and Freighter wallet are the primary tools for transaction signing and network reads.
+
+## 4. Code Generation Rules
+* Do not write placeholder comments like `// add logic here` unless explicitly asked to draft a skeleton.
+* Keep imports clean and alphabetically sorted.
+* When modifying existing UI, never overwrite the foundational fonts and theme; only add your specific component changes on top of the established base.

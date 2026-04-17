@@ -1,16 +1,53 @@
+import { AxiomLayout } from '@/components/axiom-layout';
+import { LeftPanel, RightPanel } from '@/components/axiom-panels';
+
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center font-sans">
-      <main className="flex w-full max-w-3xl flex-col items-center gap-8 px-6 py-16 text-center sm:items-start sm:text-left">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-4xl font-bold tracking-tight">
-            axiom
-          </h1>
-          <p className="max-w-md text-lg text-muted-foreground">
-            To get started, send a prompt or modify this page directly.
-          </p>
-        </div>
-      </main>
-    </div>
+    <AxiomLayout
+      leftPanel={
+        <LeftPanel title="Module A">
+          <div className="space-y-6">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                System Status
+              </p>
+              <p className="mt-2 text-sm text-foreground">
+                Ready for deployment
+              </p>
+            </div>
+            <div className="border-t border-border pt-6">
+              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                Configuration
+              </p>
+              <p className="mt-2 text-sm text-foreground">
+                Production mode
+              </p>
+            </div>
+          </div>
+        </LeftPanel>
+      }
+      rightPanel={
+        <RightPanel title="Module B">
+          <div className="space-y-6">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                Operations
+              </p>
+              <p className="mt-2 text-sm text-foreground">
+                All systems operational
+              </p>
+            </div>
+            <div className="border-t border-border pt-6">
+              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                Last Updated
+              </p>
+              <p className="mt-2 font-mono text-xs text-foreground">
+                2026-04-17 00:00:00 UTC
+              </p>
+            </div>
+          </div>
+        </RightPanel>
+      }
+    />
   );
 }

@@ -1,35 +1,42 @@
-# axiom
+# AXIOM Protocol 
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+> A decentralized, privacy-preserving proof-of-existence and document notary protocol built on Stellar's Soroban network.
 
-## Built with v0
+## Overview
+Founders, creators, and developers lack a fast, indisputable, and cheap method to prove the existence and state of a specific file at a specific time. Traditional IP and notary systems are slow, centralized, and expensive. 
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+Axiom solves this by providing a trustless web utility where users can drag and drop a file, generate a cryptographic hash strictly on the client side (preserving data privacy), and anchor that hash to the Stellar blockchain via a Soroban smart contract. 
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_Ekjab2TsuTkP6zA1aGfJAHMYbFkR)
+## Stellar Ecosystem Integration 
+Axiom is actively participating in the **Drips Stellar Wave** program. The core of this protocol relies heavily on the Stellar ecosystem:
+* **Smart Contracts (Soroban & Rust):** The underlying ledger is a lightweight Soroban contract functioning as a highly optimized Key-Value store to record SHA-256 hashes, timestamps, and creator addresses.
+* **Network Interfacing:** Utilization of the `@stellar/stellar-sdk` for submitting transactions and querying the immutable verification log.
+* **Wallet Integration:** Native support for the **Freighter** wallet for contract invocation and signing.
 
-## Getting Started
+## Architecture & Engineering Standards
 
-First, run the development server:
+Axiom adheres to strict engineering guidelines to ensure a pristine open-source codebase for contributors. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+**Frontend (Next.js / React / Tailwind CSS)**
+* **Component Composition:** We enforce strict component composition over complex conditional rendering and prop-drilling. UI elements are highly modular and decoupled from protocol logic.
+* **Design System:** The UI follows a strict Brutalist architectural aesthetic. We prioritize structural layouts, monochromatic palettes, and typography-driven data feeds over generic gradients and bloated web3 templates.
+* **Privacy-First:** File hashing is executed locally in the browser. Raw files are never transmitted or stored on external servers.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Backend / On-Chain (Soroban / Rust)**
+* Lightweight map structures.
+* Immutable ledger design with minimal compute overhead.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Roadmap & Open Bounties (Stellar Wave)
+We are actively sourcing contributors for the following milestones via the Drips Wave platform:
 
-## Learn More
+- [ ] **Bounty:** Implement the core Soroban contract for Hash Map storage.
+- [ ] **Bounty:** Integrate Freighter wallet connection and state management.
+- [ ] **Bounty:** Implement client-side SHA-256 file hashing logic.
+- [ ] **Bounty:** Connect the Next.js frontend to the Soroban RPC to display the Verification Log.
 
-To learn more, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
-
-<a href="https://v0.app/chat/api/kiro/clone/dot-enny/axiom" alt="Open in Kiro"><img src="https://pdgvvgmkdvyeydso.public.blob.vercel-storage.com/open%20in%20kiro.svg?sanitize=true" /></a>
+## Contributing
+We welcome contributions from the Stellar and Drips community. 
+1. Fork the repository.
+2. Review our `.clauderules` file in the root directory for strict formatting, architectural guidelines, and design constraints before submitting a PR.
+3. Claim an open issue via the Drips platform.
+4. Submit a PR targeting the `main` branch.

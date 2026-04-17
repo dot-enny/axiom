@@ -7,6 +7,7 @@ interface ProofState {
   file: File | null;
   hash: string | null;
   isDragActive: boolean;
+  status: 'idle' | 'processing' | 'complete';
 }
 
 const generateMockHash = () => {
@@ -14,12 +15,11 @@ const generateMockHash = () => {
 };
 
 export function ProofDropzone() {
-  const mockFile = new File([], 'TRD_v1.pdf', { type: 'application/pdf' });
-  
   const [state, setState] = useState<ProofState>({
-    file: mockFile,
-    hash: generateMockHash(),
+    file: null,
+    hash: null,
     isDragActive: false,
+    status: 'idle',
   });
 
   const handleDragEnter = () => {
@@ -36,13 +36,36 @@ export function ProofDropzone() {
 
     const droppedFile = e.dataTransfer.files?.[0];
     if (droppedFile) {
+      triggerProcessing(droppedFile);
+    }
+  };
+
+  const handleDropzoneClick = () => {
+    if (state.status === 'idle') {
+      const mockFile = new File([], 'System_Architecture.pdf', { type: 'application/pdf' });
+      triggerProcessing(mockFile);
+    }
+  };
+
+  const triggerProcessing = (file: File) => {
+    setState((prev) => ({
+      ...prev,
+      file,
+      status: 'processing',
+    }));
+
+    setTimeout(() => {
       const mockHash = generateMockHash();
       setState((prev) => ({
         ...prev,
-        file: droppedFile,
         hash: mockHash,
+        status: 'complete',
       }));
-    }
+    }, 1500);
+  };
+
+  const handleAnchorClick = () => {
+    alert('Soroban Wallet Invocation Triggered');
   };
 
   return (
@@ -53,13 +76,19 @@ export function ProofDropzone() {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         fileName={state.file?.name}
+        onClick={handleDropzoneClick}
+        isProcessing={state.status === 'processing'}
       />
 
-      {state.hash && (
+      {state.status === 'processing' && <ProcessingIndicator />}
+
+      {state.status === 'complete' && state.hash && (
         <HashOutput fileName={state.file?.name || ''} hash={state.hash} />
       )}
 
-      {state.hash && <AnchorButton />}
+      {state.status === 'complete' && state.hash && (
+        <AnchorButton onClick={handleAnchorClick} />
+      )}
     </div>
   );
 }
@@ -70,6 +99,8 @@ interface DropAreaProps {
   onDragLeave: () => void;
   onDrop: (e: React.DragEvent<HTMLDivElement>) => void;
   fileName?: string;
+  onClick: () => void;
+  isProcessing: boolean;
 }
 
 function DropArea({
@@ -78,17 +109,20 @@ function DropArea({
   onDragLeave,
   onDrop,
   fileName,
+  onClick,
+  isProcessing,
 }: DropAreaProps) {
   return (
     <div
       onDragEnter={onDragEnter}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
-      className={`border-2 border-dashed rounded-lg p-12 transition-all ${
+      onClick={onClick}
+      className={`border-2 border-dashed rounded-lg p-12 transition-all cursor-pointer ${
         isDragActive
           ? 'border-foreground bg-card'
           : 'border-border bg-transparent'
-      }`}
+      } ${isProcessing ? 'opacity-50' : ''}`}
     >
       <div className="text-center">
         <p className="font-mono text-sm uppercase tracking-widest text-muted-foreground">
@@ -137,10 +171,27 @@ function HashOutput({ fileName, hash }: HashOutputProps) {
   );
 }
 
-function AnchorButton() {
+interface AnchorButtonProps {
+  onClick: () => void;
+}
+
+function AnchorButton({ onClick }: AnchorButtonProps) {
   return (
-    <button className="w-full border border-foreground bg-foreground px-6 py-3 font-mono text-xs uppercase tracking-widest text-background transition-all hover:bg-transparent hover:text-foreground">
+    <button 
+      onClick={onClick}
+      className="w-full border border-foreground bg-foreground px-6 py-3 font-mono text-xs uppercase tracking-widest text-background transition-all hover:bg-transparent hover:text-foreground"
+    >
       Anchor to Soroban
     </button>
+  );
+}
+
+function ProcessingIndicator() {
+  return (
+    <div className="border border-border rounded-lg p-6 text-center">
+      <p className="font-mono text-sm uppercase tracking-widest text-foreground">
+        GENERATING HASH...
+      </p>
+    </div>
   );
 }

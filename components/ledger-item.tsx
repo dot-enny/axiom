@@ -37,7 +37,7 @@ function Timestamp({ timestamp }: { timestamp: string }) {
 
 export function LedgerItem({ record }: LedgerItemProps) {
   return (
-    <div className="flex items-center justify-between border border-border px-4 py-3">
+    <div className="flex items-center justify-between border border-border rounded-lg px-4 py-3">
       <div className="flex flex-col gap-1.5">
         <TruncatedHash hash={record.hash} />
         <Timestamp timestamp={record.timestamp} />

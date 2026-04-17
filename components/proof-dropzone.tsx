@@ -9,10 +9,16 @@ interface ProofState {
   isDragActive: boolean;
 }
 
+const generateMockHash = () => {
+  return 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
+};
+
 export function ProofDropzone() {
+  const mockFile = new File([], 'TRD_v1.pdf', { type: 'application/pdf' });
+  
   const [state, setState] = useState<ProofState>({
-    file: null,
-    hash: null,
+    file: mockFile,
+    hash: generateMockHash(),
     isDragActive: false,
   });
 
@@ -37,10 +43,6 @@ export function ProofDropzone() {
         hash: mockHash,
       }));
     }
-  };
-
-  const generateMockHash = () => {
-    return 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
   };
 
   return (
@@ -82,7 +84,7 @@ function DropArea({
       onDragEnter={onDragEnter}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
-      className={`border-2 border-dashed p-12 transition-all ${
+      className={`border-2 border-dashed rounded-lg p-12 transition-all ${
         isDragActive
           ? 'border-foreground bg-card'
           : 'border-border bg-transparent'
@@ -109,7 +111,7 @@ interface HashOutputProps {
 
 function HashOutput({ fileName, hash }: HashOutputProps) {
   return (
-    <div className="border border-border p-6">
+    <div className="border border-border rounded-lg p-6">
       <div className="space-y-4">
         <div>
           <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
@@ -124,9 +126,11 @@ function HashOutput({ fileName, hash }: HashOutputProps) {
           <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
             SHA-256 Hash
           </p>
-          <p className="mt-2 break-all font-mono text-xs text-foreground">
-            {hash}
-          </p>
+          <div className="mt-3 rounded-md bg-card p-3">
+            <p className="break-all font-mono text-xs text-foreground">
+              {hash}
+            </p>
+          </div>
         </div>
       </div>
     </div>
